@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HuellaRed – Cada animal rescatado, con su historia completa</title>
+<meta name="description" content="HuellaRed coordina rescatistas, veterinarios, hogares temporales y adoptantes en un solo lugar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f7f6;--ink:#10282b;--muted:#4f6567;--spruce:#14524f;--mango:#ffb627;--berry:#c9304f;--line:#d3e0de;--card:#ffffff;--soft:#e2eeec;
+--display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mango);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;letter-spacing:-.02em}
+/* nav */
+header{position:sticky;top:0;z-index:5;background:rgba(242,247,246,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:22px;text-decoration:none}
+.logo svg{width:30px;height:30px}
+.nav ul{display:flex;gap:28px;list-style:none;padding:0;font-weight:500}
+.nav ul a{text-decoration:none;color:var(--muted)}.nav ul a:hover{color:var(--ink)}
+.btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;font:inherit;font-weight:600}
+.btn:hover{background:var(--spruce);border-color:var(--spruce)}
+.btn.alt{background:transparent;color:var(--ink)}.btn.alt:hover{background:var(--soft);border-color:var(--ink)}
+.btn.mango{background:var(--mango);border-color:var(--mango);color:var(--ink)}.btn.mango:hover{background:#ffc654;border-color:#ffc654}
+/* hero */
+.hero{padding:72px 0 88px}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(40px,5.4vw,66px);font-weight:800}
+.hero p.lead{margin:22px 0 32px;font-size:19px;color:var(--muted);max-width:30em}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero small{display:block;margin-top:22px;color:var(--muted)}
+/* app mock */
+.app{background:var(--card);border:2px solid var(--ink);border-radius:20px;box-shadow:10px 10px 0 var(--spruce);overflow:hidden}
+.bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--soft);border-bottom:2px solid var(--ink);font-size:13px;color:var(--muted)}
+.bar i{width:11px;height:11px;border-radius:50%;background:var(--ink);opacity:.25}
+.bar span{margin-left:8px}
+.appbody{display:grid;grid-template-columns:1.6fr 1fr}
+.list{padding:18px;border-right:1px solid var(--line)}
+.list h3{font-size:19px;margin-bottom:12px}
+.chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.animal{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.animal[hidden]{display:none}
+.av{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:var(--soft)}
+.animal b{display:block;font-family:var(--display);font-size:17px}
+.animal em{font-style:normal;font-size:13.5px;color:var(--muted)}
+.pill{font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:999px;background:var(--soft);white-space:nowrap}
+.pill.go{background:var(--mango)}.pill.warn{background:#fbd9e0;color:#8c1f37}
+.side{padding:18px;background:#fafdfc}
+.side h3{font-size:17px;margin-bottom:4px}
+.side p.n{font-size:13.5px;color:var(--muted);margin-bottom:14px}
+.home{margin-bottom:14px;font-size:14.5px}
+.home div{display:flex;justify-content:space-between;font-weight:600}
+.meter{height:9px;border-radius:9px;background:var(--soft);margin:5px 0 3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--spruce)}
+.home small{color:var(--muted)}
+.alert{margin-top:16px;padding:12px 14px;border-radius:12px;background:#fbd9e0;font-size:14px;color:#6e1428}
+/* numbers strip */
+.strip{background:var(--spruce);color:#fff}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-top:34px;padding-bottom:34px}
+.strip b{display:block;font-family:var(--display);font-size:40px;line-height:1;color:var(--mango)}
+.strip span{font-size:15px;opacity:.9}
+/* sections */
+section{padding:92px 0}
+.head{max-width:640px;margin-bottom:44px}
+.head h2{font-size:clamp(30px,4vw,46px);font-weight:700}
+.head p{margin-top:14px;color:var(--muted)}
+.feat{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:auto auto;gap:22px}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:30px}
+.panel.big{grid-row:span 2;background:var(--ink);color:#fff;border-color:var(--ink)}
+.panel h3{font-size:24px;margin-bottom:10px}
+.panel p{color:var(--muted)}
+.panel.big p{color:#b9cfcd}
+.tl{list-style:none;padding:0;margin:26px 0 0;border-left:3px solid var(--mango)}
+.tl li{position:relative;padding:0 0 18px 22px;font-size:15.5px}
+.tl li:before{content:"";position:absolute;left:-9px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid var(--mango)}
+.tl b{display:block;color:#fff}.tl span{color:#b9cfcd;font-size:14px}
+.tl li:last-child{padding-bottom:0}
+/* flow */
+.flow{background:var(--soft)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;padding:0 18px 0 0;position:relative}
+.steps li:before{content:counter(s);display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--ink);color:var(--mango);font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:16px;position:relative;z-index:1}
+.steps li:after{content:"";position:absolute;top:21px;left:42px;right:0;height:2px;background:var(--ink)}
+.steps li:last-child:after{display:none}
+.steps h3{font-size:20px;margin-bottom:6px}
+.steps p{font-size:15px;color:var(--muted)}
+/* who */
+.who{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.who div{padding:18px;border-radius:16px;background:#fff;border:1.5px solid var(--line);font-size:15px}
+.who b{display:block;font-family:var(--display);font-size:18px;margin-bottom:4px}
+.who div:nth-child(2){background:var(--mango);border-color:var(--mango)}
+/* cta */
+.final .wrap{background:var(--ink);color:#fff;border-radius:28px;padding:64px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.final h2{font-size:clamp(28px,3.6vw,42px);max-width:15em}
+.final p{color:#b9cfcd;margin-top:10px}
+footer{padding:36px 0 48px;color:var(--muted);font-size:14.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:960px){
+ .hero .wrap,.feat{grid-template-columns:1fr}.panel.big{grid-row:auto}
+ .steps{grid-template-columns:1fr;gap:26px}.steps li:after{display:none}
+ .who{grid-template-columns:1fr 1fr}.strip .wrap{grid-template-columns:1fr 1fr}
+ .nav ul{display:none}.appbody{grid-template-columns:1fr}.list{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:520px){.who{grid-template-columns:1fr}.final .wrap{padding:44px 26px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap nav">
+  <a class="logo" href="#"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="21" r="8" fill="#14524f"/><circle cx="6.5" cy="13" r="3.4" fill="#ffb627"/><circle cx="12" cy="6.5" r="3.4" fill="#ffb627"/><circle cx="20" cy="6.5" r="3.4" fill="#ffb627"/><circle cx="25.5" cy="13" r="3.4" fill="#ffb627"/></svg>HuellaRed</a>
+  <ul><li><a href="#historial">Historial</a></li><li><a href="#recorrido">Cómo funciona</a></li><li><a href="#quienes">Para quién es</a></li></ul>
+  <a class="btn" href="#unete">Entrar a la red</a>
+ </div>
+</header>
+
+<main>
+<div class="hero"><div class="wrap">
+ <div>
+  <h1>Cada animal rescatado, con su historia completa.</h1>
+  <p class="lead">HuellaRed junta a rescatistas, veterinarios, hogares temporales y adoptantes en un solo lugar. Dejas los chats y las hojas sueltas, y sabes dónde está cada animal y qué le toca después.</p>
+  <div class="cta"><a class="btn mango" href="#unete">Registrar mi grupo</a><a class="btn alt" href="#historial">Ver un historial</a></div>
+  <small>Hecho para asociaciones pequeñas y rescatistas independientes de la Ciudad de México.</small>
+ </div>
+
+ <div class="app" aria-label="Vista de ejemplo de HuellaRed">
+  <div class="bar"><i></i><i></i><i></i><span>huellared.mx / animales</span></div>
+  <div class="appbody">
+   <div class="list">
+    <h3>Animales de la red</h3>
+    <div class="chips" role="group" aria-label="Filtrar por especie">
+     <button class="chip" data-f="todos" aria-pressed="true">Todos</button>
+     <button class="chip" data-f="perro" aria-pressed="false">Perros</button>
+     <button class="chip" data-f="gato" aria-pressed="false">Gatos</button>
+     <button class="chip" data-f="otro" aria-pressed="false">Otros</button>
+    </div>
+    <div class="animal" data-s="perro"><div class="av">🐕</div><div><b>Luna</b><em>Perra mediana · Hogar Romero, Coyoacán</em></div><span class="pill go">Disponible</span></div>
+    <div class="animal" data-s="gato"><div class="av">🐈</div><div><b>Miso</b><em>Gato · Clínica Patitas, refuerzo el 14 oct</em></div><span class="pill warn">Vacuna por vencer</span></div>
+    <div class="animal" data-s="perro"><div class="av">🐕</div><div><b>Tobi</b><em>Perro grande · Solicitud de Ana M. en revisión</em></div><span class="pill">En adopción</span></div>
+    <div class="animal" data-s="gato"><div class="av">🐈</div><div><b>Nube</b><em>Gata · Adoptada, visita 2 de 3 el 20 oct</em></div><span class="pill">En seguimiento</span></div>
+    <div class="animal" data-s="otro"><div class="av">🐇</div><div><b>Canela</b><em>Conejo · Hogar Salgado, Tlalpan</em></div><span class="pill">En hogar temporal</span></div>
+   </div>
+   <div class="side">
+    <h3>Hogares con lugar</h3>
+    <p class="n">Hoy, por especie</p>
+    <div class="home"><div><span>Hogar Romero</span><span>2 libres</span></div><div class="meter"><i style="width:60%"></i></div><small>Perros y gatos · 3 de 5 ocupados</small></div>
+    <div class="home"><div><span>Hogar Salgado</span><span>1 libre</span></div><div class="meter"><i style="width:75%"></i></div><small>Gatos y conejos · 3 de 4 ocupados</small></div>
+    <div class="home"><div><span>Hogar Ibarra</span><span>Lleno</span></div><div class="meter"><i style="width:100%;background:var(--berry)"></i></div><small>Solo perros · 2 de 2 ocupados</small></div>
+    <div class="alert"><b>6 vacunas</b> vencen esta semana.</div>
+   </div>
+  </div>
+ </div>
+</div></div>
+
+<div class="strip"><div class="wrap">
+ <div><b>128</b><span>animales con historial en la red</span></div>
+ <div><b>14</b><span>hogares temporales con lugar hoy</span></div>
+ <div><b>37</b><span>adopciones registradas este año</span></div>
+ <div><b>21 días</b><span>de rescate a adopción, en promedio</span></div>
+</div></div>
+
+<section id="historial"><div class="wrap">
+ <div class="head"><h2>Lo que antes se perdía en el chat, ahora queda anotado.</h2><p>Cada animal tiene una sola ficha que sigue con él, sin importar quién lo rescató ni en qué casa esté.</p></div>
+ <div class="feat">
+  <div class="panel big">
+   <h3>Historial de Luna</h3>
+   <p>Rescatada el 14 de septiembre. Esto es lo que ve quien la recibe después.</p>
+   <ul class="tl">
+    <li><b>Rescate en Iztapalapa</b><span>Lo hizo Sofía R. con otra cría de la misma camada</span></li>
+    <li><b>Primera vacuna y desparasitación</b><span>Dra. Elena V. · refuerzo el 5 de octubre</span></li>
+    <li><b>Esterilización</b><span>Sin complicaciones · Clínica Patitas</span></li>
+    <li><b>Traslado al Hogar Romero</b><span>Lo llevó Sofía R. · desde el 18 de septiembre</span></li>
+    <li><b>Solicitud de adopción aprobada</b><span>Familia Ortega, con patio y sin otras mascotas</span></li>
+   </ul>
+  </div>
+  <div class="panel"><h3>Sabes dónde hay lugar</h3><p>Cada hogar muestra cuántos lugares libres tiene y para qué especies, así no mandas un gato a una casa que solo acepta perros.</p></div>
+  <div class="panel"><h3>Si lo devuelven, queda el motivo</h3><p>Cada adopción tiene sus visitas de seguimiento. Si un animal regresa, se registra por qué y vuelve a estar disponible.</p></div>
+ </div>
+</div></section>
+
+<section class="flow" id="recorrido"><div class="wrap">
+ <div class="head"><h2>Del rescate al seguimiento, en el mismo lugar.</h2></div>
+ <ol class="steps">
+  <li><h3>Rescate</h3><p>Registras dónde y cuándo, y quién participó. Una camada es un solo rescate.</p></li>
+  <li><h3>Atención</h3><p>Vacunas, cirugías y tratamientos quedan con fecha y con la próxima dosis.</p></li>
+  <li><h3>Hogar temporal</h3><p>Eliges un hogar con lugar y la especie correcta, y queda quién lo trasladó.</p></li>
+  <li><h3>Adopción</h3><p>Recibes solicitudes, apruebas una y registras la adopción.</p></li>
+  <li><h3>Seguimiento</h3><p>Programas visitas y anotas cómo va el animal en su casa nueva.</p></li>
+ </ol>
+</div></section>
+
+<section id="quienes"><div class="wrap">
+ <div class="head"><h2>Cada quien ve lo que necesita.</h2></div>
+ <div class="who">
+  <div><b>Rescatistas</b>Registran rescates y traslados.</div>
+  <div><b>Veterinarios</b>Anotan atenciones, incluso en campo.</div>
+  <div><b>Hogares temporales</b>Muestran su capacidad y qué especies aceptan.</div>
+  <div><b>Adoptantes</b>Piden un animal y reciben visitas.</div>
+  <div><b>Coordinación</b>Ve zonas, tiempos de adopción y pendientes.</div>
+ </div>
+</div></section>
+
+<section class="final" id="unete" style="padding-top:20px"><div class="wrap">
+ <div><h2>Tu grupo ya hace el trabajo. Que se vea.</h2><p>Registra a tu asociación y migra tus hojas de cálculo en una tarde.</p></div>
+ <a class="btn mango" href="mailto:hola@huellared.mx">Escríbenos</a>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 HuellaRed · Proyecto escolar de Bases de Datos, ESCOM-IPN</span><span>hola@huellared.mx</span></div></footer>
+
+<script>
+const chips=document.querySelectorAll('.chip'),rows=document.querySelectorAll('.animal');
+chips.forEach(c=>c.addEventListener('click',()=>{
+ chips.forEach(x=>x.setAttribute('aria-pressed',x===c));
+ rows.forEach(r=>r.hidden=c.dataset.f!=='todos'&&r.dataset.s!==c.dataset.f);
+}));
+</script>
+</body>
+</html>
