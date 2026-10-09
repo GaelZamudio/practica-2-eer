@@ -47,7 +47,7 @@ El despliegue y puesta en marcha del proyecto asignado se completó exitosamente
 
 ## Landing Page
 
-* **Enlace desplegado (GitHub Pages / Web):** [https://GaelZamudio.github.io/practica-2-eer/](https://GaelZamudio.github.io/practica-2/)
+* **Enlace desplegado (GitHub Pages / Web):** [https://GaelZamudio.github.io/practica-2-eer/](https://GaelZamudio.github.io/practica-2-eer/)
 * **Archivo local:** [index.html](index.html)
 
 ---
